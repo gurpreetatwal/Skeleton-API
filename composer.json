@@ -1,20 +1,31 @@
 {
-    "name": "slim/slim-skeleton",
-    "description": "A Slim Framework skeleton application for rapid development",
-    "keywords": ["microframework","rest","router", "psr7"],
-    "homepage": "http://github.com/slimphp/Slim-Skeleton",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Josh Lockhart",
-            "email": "info@joshlockhart.com",
-            "homepage": "http://www.joshlockhart.com/"
-        }
-    ],
-    "require": {
-        "php": ">=5.5.0",
-        "slim/slim": "~3.0",
-        "slim/php-view": "^2.0",
-        "monolog/monolog": "^1.17"
+  "name": "gurpreetatwal/Slim-REST-Skeleton",
+  "description": "A Slim Framework skeleton for a REST api that uses JWTS for authentication and Laravel's Eloquent as the ORM",
+  "keywords": [
+    "microframework",
+    "rest",
+    "router",
+    "psr7",
+    "slim",
+    "slim3",
+    "jwt",
+    "eloquent"
+  ],
+  "homepage": "https://github.com/gurpreetatwal/Slim-REST-Skeleton",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gurpreet Atwal",
+      "email": "gatwal@gatwal.com",
+      "homepage": "http://gatwal.com/"
     }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "slim/slim": "~3.0",
+    "monolog/monolog": "^1.17",
+    "illuminate/database": "^5.2.0",
+    "palanik/corsslim": "dev-slim3",
+    "phpunit/phpunit": "^5.1"
+  }
 }
