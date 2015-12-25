@@ -1,13 +1,14 @@
 <?php
-// DIC configuration
-
+use  Monolog\Logger;
 $container = $app->getContainer();
 
-// monolog
+// Monolog
 $container['logger'] = function ($c) {
-    $settings = $c->get('settings')['logger'];
-    $logger = new Monolog\Logger($settings['name']);
+    $settings = $c['settings']['logger'];
+    $logger = new Logger($c['app-name']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
-    $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], Monolog\Logger::DEBUG));
+    $logger->pushProcessor(new Monolog\Processor\IntrospectionProcessor());
+    $logger->pushProcessor(new Monolog\Processor\WebProcessor());
+    $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], Logger::DEBUG));
     return $logger;
 };
