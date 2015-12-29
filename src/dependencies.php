@@ -1,5 +1,7 @@
 <?php
-use  Monolog\Logger;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Monolog\Logger;
+
 $container = $app->getContainer();
 
 // Monolog
@@ -12,3 +14,16 @@ $container['logger'] = function ($c) {
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], Logger::DEBUG));
     return $logger;
 };
+
+$container['capsule'] = function ($c) {
+    $settings = array_merge(
+        $c['settings']['database'],
+        parse_ini_file('../environment.ini', true)['database']
+    );
+    $capsule = new Capsule();
+    $capsule->addConnection($settings);
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
+    return $capsule;
+};
+$container["capsule"];

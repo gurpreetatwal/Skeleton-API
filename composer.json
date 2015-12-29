@@ -26,6 +26,7 @@
     "monolog/monolog": "^1.17",
     "illuminate/database": "^5.2.0",
     "palanik/corsslim": "dev-slim3",
-    "phpunit/phpunit": "^5.1"
+    "phpunit/phpunit": "^5.1",
+    "tuupola/slim-jwt-auth": "^2.0"
   }
 }
