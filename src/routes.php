@@ -1,10 +1,12 @@
 <?php
-// Routes
 
-$app->get('/[{name}]', function ($request, $response, $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
-
-    // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
+$app->group('/user', function () {
+    $this->get('', '\SkeletonAPI\Controllers\User:all');
+    $this->post('', '\SkeletonAPI\Controllers\User:create');
+    $this->get('/:uid', '\SkeletonAPI\Controllers\User:find');
+    $this->put('/:uid', '\SkeletonAPI\Controllers\User:update');
+    $this->delete('/:uid', '\SkeletonAPI\Controllers\User:delete');
 });
+$app->post('/login', '\SkeletonAPI\Controllers\Auth:login');
+$app->post('/recover', '\SkeletonAPI\Controllers\Auth:recover');
+$app->post('/reset-password', '\SkeletonAPI\Controllers\Auth:reset');
