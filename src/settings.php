@@ -2,7 +2,7 @@
 use Slim\Middleware\JwtAuthentication;
 
 return [
-    'app-name' => 'Slim-REST-API',
+    'app-name' => 'Skeleton-API',
     'settings' => [
         'displayErrorDetails' => true,
 

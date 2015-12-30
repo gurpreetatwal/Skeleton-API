@@ -1,6 +1,6 @@
 {
-  "name": "gurpreetatwal/Slim-REST-Skeleton",
-  "description": "A Slim Framework skeleton for a REST api that uses JWTS for authentication and Laravel's Eloquent as the ORM",
+  "name": "gurpreetatwal/Skeleton-Api",
+  "description": "A Slim Framework skeleton for a (almost) REST api that uses JWTs for authentication and Laravel's Eloquent as the ORM",
   "keywords": [
     "microframework",
     "rest",
@@ -11,7 +11,7 @@
     "jwt",
     "eloquent"
   ],
-  "homepage": "https://github.com/gurpreetatwal/Slim-REST-Skeleton",
+  "homepage": "https://github.com/gurpreetatwal/Skeleton-API",
   "license": "MIT",
   "authors": [
     {
