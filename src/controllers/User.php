@@ -2,7 +2,7 @@
 namespace SkeletonAPI\Controllers;
 
 
-class User
+class User extends AbstractController
 {
 
 }
