@@ -1,10 +1,22 @@
-# Slim Framework 3 Skeleton Application
+# Skeleton API
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 3 application. This application uses the latest Slim 3 with the PHP-View template renderer. It also uses the Monolog logger.
+The goal of this project is to create a rudimentary API that allows for rapid development of an actual API.
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+This project is still under development and is not ready for use in production. 
+
+Originally a fork of [Slim-Skeleton](https://github.com/slimphp/Slim-Skeleton)
+
+## Features
+- [Slim Framework](http://www.slimframework.com)
+- Laravel's [Eloquent ORM](https://laravel.com/docs/5.2/eloquent) for easy database access
+- [Monolog](https://github.com/Seldaek/monolog) for logging
+- [JWTs](http://jwt.io) for user authentication
+- Use the power of [Respect\Validation](https://github.com/Respect/Validation) with a simpler syntax to validate your data
+- Already set up for CORS
 
 ## Install the Application
+
+**Needs to be updated**
 
 Run this command from the directory in which you want to install your new Slim Framework application.
 
