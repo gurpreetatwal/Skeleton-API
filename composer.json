@@ -28,7 +28,8 @@
     "palanik/corsslim": "dev-slim3",
     "phpunit/phpunit": "^5.1",
     "tuupola/slim-jwt-auth": "^2.0",
-    "siriusphp/validation": "^2.1"
+    "respect/validation": "^1.0",
+    "egulias/email-validator": "^1.2"
   },
   "autoload": {
     "psr-4": {
