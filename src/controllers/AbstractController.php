@@ -29,4 +29,27 @@ abstract class AbstractController
         $this->logger = $container->get('logger');
     }
 
+    /**
+     * @return mixed
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     * @return Container
+     */
+    public function getApp()
+    {
+        return $this->app;
+    }
+
+    /**
+     * @return Capsule
+     */
+    public function getDB()
+    {
+        return $this->DB;
+    }
 }
