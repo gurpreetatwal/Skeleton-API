@@ -39,37 +39,48 @@ class Validator
     public function addField($field, $rule)
     {
         $fieldValidator = new AllOf();
-        $fieldValidator->addRules($this->parse_rules($rule));
+        $fieldValidator->addRules($this->createRuleArray($rule));
         $this->validator->addRule(
             new Attribute($field, $fieldValidator)
         );
     }
 
-    private function parse_rules($rules)
+    private function createRuleArray($rules)
     {
         $validators = [];
         $rules = explode("|", $rules);
         foreach ($rules as $rule) {
-            $rule = trim($rule);
-            $args = [];
-            if (strpos($rule, '(')) {
-                $args = substr($rule, strpos($rule, '(') + 1, strlen($rule) - strpos($rule, '(') - 2);
-                $args = explode(',', $args);
-                array_walk($args, array($this, "test"));
-                $rule = substr($rule, 0, strpos($rule, '('));
-            };
-            $rule = 'Respect\\Validation\\Rules\\' . $rule;
-            array_push($validators, new $rule(...$args));
+            array_push($validators, $this->createRule($rule));
         }
         return $validators;
     }
 
-    function test(&$arg, $key)
+    private function createRule($rule)
     {
-        if (is_int($arg)) {
-            $arg = intval($arg);
-        } else if (strtolower($arg) === 'null') {
-            $arg = null;
+        $args = [];
+        $rule = trim($rule);
+        $paren = strpos($rule, '(');
+        if ($paren) {
+            $rule = substr($rule, 0, $paren);
+            $args = substr($rule, $paren + 1, strlen($rule) - $paren - 2);
+            $args = explode(',', $args);
+            $args = $this->formatArgs($args);
+        };
+        $rule = 'Respect\\Validation\\Rules\\' . $rule;
+        return new $rule(...$args);
+    }
+
+    private function formatArgs($args)
+    {
+        $new_args = [];
+        foreach ($args as $arg) {
+            if (strtolower($arg) === 'null') {
+                $arg = null;
+            } else if (is_numeric($arg)) {
+                $arg = intval($arg);
+            }
+            array_push($new_args, $arg);
         }
+        return $new_args;
     }
 }
