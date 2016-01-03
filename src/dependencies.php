@@ -26,4 +26,4 @@ $container['capsule'] = function ($c) {
     $capsule->bootEloquent();
     return $capsule;
 };
-$container["capsule"];
+$container['capsule'];
