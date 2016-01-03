@@ -1,6 +1,6 @@
 <?php
 
-namespace SkeletonAPI;
+namespace SkeletonAPI\lib;
 
 use Respect\Validation\Rules\AllOf;
 use Respect\Validation\Rules\Attribute;
