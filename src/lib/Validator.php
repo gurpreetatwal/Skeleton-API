@@ -14,7 +14,7 @@ use Respect\Validation\Rules\Attribute;
  * key, value pair where the key is the name of the field that needs to be validated and the value is a list of
  * validation rules separated by the pipe | character. If you wish to specify a name you can provide it as a part of the
  * key by inserting a colon followed by the name, do not use SetName. Most of rules provided in the Respect\Validation
- * package, other than the 'Group Validators' should work.
+ * package, other than the rules that act on other rules such as 'Group Validators' or Not/Optional should work.
  *
  * Example rules array:
  * $rules = [
@@ -29,6 +29,7 @@ use Respect\Validation\Rules\Attribute;
  * @see         https://github.com/Respect/Validation/blob/master/docs/VALIDATORS.md List of validation rules that can be used
  * @see         https://github.com/Respect/Validation/blob/master/docs/README.md     Usage
  * @todo        Write tests
+ * @todo        Add support for rules that act on other rules
  */
 class Validator extends \Respect\Validation\Validator
 {
@@ -116,11 +117,13 @@ class Validator extends \Respect\Validation\Validator
         $args = [];
         foreach ($_args as $arg) {
             $arg = trim($arg);
+
             if (strtolower($arg) === 'null') {
                 $arg = null;
             } else if (is_numeric($arg)) {
                 $arg = intval($arg);
-            }
+            } //TODO: check if arg is rule, if so it should be instantiated
+
             array_push($args, $arg);
         }
         return $args;
