@@ -23,8 +23,8 @@ return [
 
         'JWT' => [
             'secure' => false,
-            'callback' => function ($options) use ($app) {
-                $app->jwt = $options['decoded'];
+            'callback' => function ($request, $response, $params) {
+                $this->jwt = $params['decoded'];
                 return true;
             },
             'rules' => [
