@@ -5,6 +5,6 @@ $app->add(new Slim\Middleware\JwtAuthentication(array_merge(
     $container['settings']['JWT'],
     [
         'logger' => $container->get('logger'),
-        'secret' => parse_ini_file('../environment.ini')['jwt-secret']
+        'secret' => parse_ini_file('/../environment.ini')['jwt-secret']
     ]
 )));
