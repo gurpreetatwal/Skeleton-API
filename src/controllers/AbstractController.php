@@ -3,22 +3,23 @@
 namespace SkeletonAPI\Controllers;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Monolog\Logger;
 use Slim\Container;
 
 abstract class AbstractController
 {
     /**
-     * @var Container   The container of the Slim app that creates instantiates this class
+     * @var Container Slim DI Container
      */
     protected $app;
 
     /**
-     * @var mixed   Logger provided by Slim
+     * @var Logger Logger provided by Slim
      */
     protected $logger;
 
     /**
-     * @var Capsule Database connection
+     * @var Capsule Eloquent database connection
      */
     protected $DB;
 
@@ -30,7 +31,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return mixed
+     * @return Logger
      */
     public function getLogger()
     {
