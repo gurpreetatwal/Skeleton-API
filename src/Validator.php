@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gurpr_000
- * Date: 12/31/2015
- * Time: 2:51 AM
- */
 
 namespace SkeletonAPI;
 
@@ -21,28 +15,35 @@ use Respect\Validation\Rules\Attribute;
  * Class Validator
  * @package SkeletonAPI
  */
-class Validator
+class Validator extends \Respect\Validation\Validator
 {
-    public $fields = [];
-    public $rules = [];
-    public $validator;
-
     public function __construct(array $rules)
     {
-        $this->validator = new AllOf();
-
         foreach ($rules as $field => $rule) {
-            $this->addField($field, $rule);
+            $this->addAttribute($field, $rule);
         }
+        parent::__construct();
     }
 
-    public function addField($field, $rule)
+    /**
+     * @param $field
+     * @param $rule
+     */
+    public function addAttribute($field, $rule)
     {
-        $fieldValidator = new AllOf();
-        $fieldValidator->addRules($this->createRuleArray($rule));
-        $this->validator->addRule(
-            new Attribute($field, $fieldValidator)
-        );
+        $attributeRule = new AllOf();
+        $attributeRule->addRules($this->createRuleArray($rule));
+        $name = $field;
+
+        // Get name if one was provided
+        if (($colon = strpos($field, ':')) !== false) {
+            $name = substr($field, $colon + 1);
+            $field = substr($field, 0, $colon);
+        }
+
+        $attribute = new Attribute($field, $attributeRule);
+        $attribute->setName($name);
+        $this->addRule($attribute);
     }
 
     private function createRuleArray($rules)
@@ -59,13 +60,15 @@ class Validator
     {
         $args = [];
         $rule = trim($rule);
-        $paren = strpos($rule, '(');
-        if ($paren) {
-            $rule = substr($rule, 0, $paren);
+
+        // Get function args if provided
+        if (($paren = strpos($rule, '(')) !== false) {
             $args = substr($rule, $paren + 1, strlen($rule) - $paren - 2);
+            $rule = substr($rule, 0, $paren);
             $args = explode(',', $args);
             $args = $this->formatArgs($args);
         };
+
         $rule = 'Respect\\Validation\\Rules\\' . $rule;
         return new $rule(...$args);
     }
@@ -74,6 +77,7 @@ class Validator
     {
         $new_args = [];
         foreach ($args as $arg) {
+            $arg = trim($arg);
             if (strtolower($arg) === 'null') {
                 $arg = null;
             } else if (is_numeric($arg)) {
