@@ -18,7 +18,7 @@ $container['logger'] = function ($c) {
 $container['capsule'] = function ($c) {
     $settings = array_merge(
         $c['settings']['database'],
-        parse_ini_file('/../environment.ini', true)['database']
+        parse_ini_file(__DIR__ . '/../environment.ini', true)['database']
     );
     $capsule = new Capsule();
     $capsule->addConnection($settings);
