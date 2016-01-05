@@ -3,7 +3,7 @@
 namespace SkeletonAPI\lib;
 
 use Respect\Validation\Rules\AllOf;
-use Respect\Validation\Rules\Attribute;
+use Respect\Validation\Rules\Key;
 
 /**
  * Extension of Respect\Validation that allows for the the validation rules to be specified by strings
@@ -29,6 +29,7 @@ use Respect\Validation\Rules\Attribute;
  * @see         https://github.com/Respect/Validation/blob/master/docs/VALIDATORS.md List of validation rules that can be used
  * @see         https://github.com/Respect/Validation/blob/master/docs/README.md     Usage
  * @todo        Write tests
+ * @todo        Add support for class validation
  * @todo        Add support for rules that act on other rules
  */
 class Validator extends \Respect\Validation\Validator
@@ -64,7 +65,7 @@ class Validator extends \Respect\Validation\Validator
             $field = substr($field, 0, $colon);
         }
 
-        $attribute = new Attribute($field, $attributeRule);
+        $attribute = new Key($field, $attributeRule);
         $attribute->setName($name);
         $this->addRule($attribute);
     }
