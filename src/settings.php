@@ -11,7 +11,7 @@ return [
             'path' => __DIR__ . '/../logs/app.log',
         ],
 
-        //CORS Settings
+        // Settings for CORS Middleware
         'CORS' => [
             'origin' => ['localhost'],
             'exposeHeaders' => [],
@@ -21,6 +21,7 @@ return [
             'allowHeaders' => ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
         ],
 
+        // Settings for JWT Middleware
         'JWT' => [
             'secure' => false,
             'callback' => function ($request, $response, $params) {
