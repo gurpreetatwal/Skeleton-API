@@ -29,7 +29,7 @@ trait UtilTrait
      */
     public function formatMessages(NestedValidationException $exceptions)
     {
-        $messages = [$exceptions->getMessage()];
+        $messages = [$exceptions->getFullMessage()];
         foreach ($exceptions as $exception) {
             $input = $exception->getParams()["input"];
             $message = $exception->getMessage();

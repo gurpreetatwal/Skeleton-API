@@ -31,7 +31,7 @@ return [
             'rules' => [
                 new JwtAuthentication\RequestPathRule([
                     'path' => '/',
-                    'passthrough' => ['/login', '/recover', '/reset-password']
+                    'passthrough' => ['/user', '/login', '/recover', '/reset-password']
                 ]),
                 new JwtAuthentication\RequestMethodRule([
                     'passthrough' => ['OPTIONS']
