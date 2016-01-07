@@ -55,7 +55,7 @@ trait UtilTrait
      */
     public function encodeJWT(array $token)
     {
-        $secret = parse_ini_file(__DIR__ . '/../environment.ini')['jwt-secret'];
+        $secret = parse_ini_file(__DIR__ . '/../../environment.ini')['jwt-secret'];
         $token = array_merge(
             [
                 "iss" => "https://api.website.com",
