@@ -1,6 +1,7 @@
 <?php
 namespace SkeletonAPI\Controllers;
 
+use Exception;
 use Illuminate\Database\QueryException;
 use Respect\Validation\Exceptions\NestedValidationException;
 use SkeletonAPI\lib\UtilTrait;
@@ -30,13 +31,15 @@ class User extends AbstractController
 
     /**
      * Create a new user with the data provided in the request body and return a JWT to start the User's session
-     * @todo Create the JWT
-     * @todo Log the request and response
+     * @todo Figure out way to make exceptions more DRY, the way its currently set up each method would have all of these
+     *       blocks.
      */
     public function create(Request $request, Response $response, array $args)
     {
+        $logger = $this->getLogger();
         try {
             $data = $request->getParsedBody();
+            $logger->addInfo('Creating new user', $data);
             $user = UserModel::create($data)->toArray();
             $jwt = [
                 "email" => $user["email"],
@@ -45,12 +48,14 @@ class User extends AbstractController
             $jwt = $this->encodeJWT($jwt);
             return $response->withJson($jwt);
         } catch (NestedValidationException $e) {
-            //todo log
+            $logger->addNotice("ValidationException {$e->getMainMessage()}", $data);
             $messages = $this->formatMessages($e);
             return $response->withJson($messages, 400);
         } catch (QueryException $e) {
-            //todo log
+            $logger->addCritical("QueryException {$e->getMessage()}", $data);
             return $response->withStatus(500);
+        } catch (Exception $e) {
+            $logger->addAlert("Exception {$e->getMessage()}", $data);
         }
     }
 
