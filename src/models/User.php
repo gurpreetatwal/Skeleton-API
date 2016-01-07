@@ -47,13 +47,16 @@ class User extends Model
         $validator = new Validator(self::$rules);
         $validator->assert($attributes);
 
-        // Normalize the data
-        $attributes['email'] = strtolower($attributes['email']);
-        $attributes['password'] = password_hash($attributes['password'], PASSWORD_DEFAULT);
-        $attributes['answer'] = password_hash($attributes['answer'], PASSWORD_DEFAULT);
-        $attributes['activation_key'] = sha1(mt_rand(10000, 99999) . time() . $attributes['email']);
+        // Create the user object
+        $user = new self();
+        $user->email = strtolower($attributes['email']);
+        $user->password = password_hash($attributes['password'], PASSWORD_DEFAULT);
+        $user->question = $attributes["question"];
+        $user->answer = password_hash($attributes['answer'], PASSWORD_DEFAULT);
+        $user->activation_key = sha1(mt_rand(10000, 99999) . time() . $attributes['email']);
 
         // Create the record
-        return parent::create($attributes);
+        $user->save();
+        return $user;
     }
 }
