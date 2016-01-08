@@ -1,9 +1,6 @@
 <?php
 namespace SkeletonAPI\Controllers;
 
-use Exception;
-use Illuminate\Database\QueryException;
-use Respect\Validation\Exceptions\NestedValidationException;
 use SkeletonAPI\lib\UtilTrait;
 use SkeletonAPI\Models\User as UserModel;
 use Slim\Http\Request;
@@ -37,26 +34,16 @@ class User extends AbstractController
     public function create(Request $request, Response $response, array $args)
     {
         $logger = $this->getLogger();
-        try {
-            $data = $request->getParsedBody();
-            $logger->addInfo('Creating new user', $data);
-            $user = UserModel::create($data)->toArray();
-            $jwt = [
-                "email" => $user["email"],
-                "id" => $user["uid"]
-            ];
-            $jwt = $this->encodeJWT($jwt);
-            return $response->withJson($jwt);
-        } catch (NestedValidationException $e) {
-            $logger->addNotice("ValidationException {$e->getMainMessage()}", $data);
-            $messages = $this->formatMessages($e);
-            return $response->withJson($messages, 400);
-        } catch (QueryException $e) {
-            $logger->addCritical("QueryException {$e->getMessage()}", $data);
-            return $response->withStatus(500);
-        } catch (Exception $e) {
-            $logger->addAlert("Exception {$e->getMessage()}", $data);
-        }
+        $data = $request->getParsedBody();
+        $logger->addInfo('Creating new user', $data);
+        $user = UserModel::create($data)->toArray();
+        $jwt = [
+            "email" => $user["email"],
+            "id" => $user["uid"]
+        ];
+        $jwt = $this->encodeJWT($jwt);
+        return $response->withJson($jwt);
+
     }
 
     /**
