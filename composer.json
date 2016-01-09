@@ -1,6 +1,7 @@
 {
   "name": "gurpreetatwal/skeleton-api",
   "description": "A Slim Framework skeleton for a (almost) REST api that uses JWTs for authentication and Laravel's Eloquent as the ORM",
+  "type": "project",
   "keywords": [
     "microframework",
     "rest",
