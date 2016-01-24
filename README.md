@@ -1,30 +1,27 @@
 # Skeleton API
 
-The goal of this project is to create a rudimentary API that allows for rapid development of an actual API.
+**This project is still under development and is not ready for use in production.**
 
-This project is still under development and is not ready for use in production. 
+This project helps to cut down on development time for PHP based APIs. Just by cloning the project you can create, update,
+find and delete users. The application supports [JWT](http://jwt.io/)-based authentication, CORS for cross-site requests, and resource based 
+urls. Logging is also set up already and application logs will be stored in `logs/` directory. 
 
-Originally a fork of [Slim-Skeleton](https://github.com/slimphp/Slim-Skeleton)
+## Installation
+*It is assumed that composer is installed and available globally, if you need to install composer follow the steps [here](https://getcomposer.org/download/)*
 
-## Features
-- [Slim Framework](http://www.slimframework.com)
-- Laravel's [Eloquent ORM](https://laravel.com/docs/5.2/eloquent) for easy database access
-- [Monolog](https://github.com/Seldaek/monolog) for logging
-- [JWTs](http://jwt.io) for user authentication
-- Use the power of [Respect\Validation](https://github.com/Respect/Validation) with a simpler syntax to validate your data
-- Already set up for CORS
+Run this command from the directory in which you want to develop your new API.
 
-## Install the Application
+    composer create-project gurpreetatwal/skeleton-api [my-app-name] -s dev
 
-**Needs to be updated**
-
-Run this command from the directory in which you want to install your new Slim Framework application.
-
-    php composer.phar create-project gurpreetatwal/skeleton-api [my-app-name]
-
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+Replace `[my-app-name]` with the desired directory name for your new API. You'll want to:
 
 * Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writeable.
+* Ensure `logs/` is web writable.
+
+To run your API locally, you can use PHP's built-in sever by running the following command:
+
+     php -S localhost:8888 -t public/ public/index.php
 
 That's it! Now go build something cool.
+
+Originally a fork of [Slim-Skeleton](https://github.com/slimphp/Slim-Skeleton)
