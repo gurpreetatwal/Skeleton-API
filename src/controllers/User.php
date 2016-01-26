@@ -19,7 +19,6 @@ class User extends AbstractController
 
     /**
      * Return all the users that are in the database
-     * @todo Log the response
      */
     public function all(Request $request, Response $response, array $args)
     {
@@ -28,8 +27,6 @@ class User extends AbstractController
 
     /**
      * Create a new user with the data provided in the request body and return a JWT to start the User's session
-     * @todo Figure out way to make exceptions more DRY, the way its currently set up each method would have all of these
-     *       blocks.
      */
     public function create(Request $request, Response $response, array $args)
     {
@@ -43,7 +40,6 @@ class User extends AbstractController
         ];
         $jwt = $this->encodeJWT($jwt);
         return $response->withJson($jwt);
-
     }
 
     /**
