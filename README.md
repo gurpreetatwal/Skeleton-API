@@ -17,6 +17,7 @@ Replace `[my-app-name]` with the desired directory name for your new API. You'll
 
 * Point your virtual host document root to your new application's `public/` directory.
 * Ensure `logs/` is web writable.
+* Create your `environment.ini` by copying the example and replacing the default values.
 
 To run your API locally, you can use PHP's built-in sever by running the following command:
 
