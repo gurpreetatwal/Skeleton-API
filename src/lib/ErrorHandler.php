@@ -3,8 +3,11 @@ namespace SkeletonAPI\lib;
 
 use Exception;
 use Illuminate\Database\QueryException;
+use MongoDB\Driver\Server;
+use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use Respect\Validation\Exceptions\NestedValidationException;
 
 /**
@@ -22,41 +25,102 @@ class ErrorHandler
 {
     use utilTrait;
 
-    protected $development;
+    protected $showDetails;
+
+    /** @var  LoggerInterface */
+    protected $logger;
+    /** @var  ServerRequestInterface */
+    protected $request;
+    /** @var  ResponseInterface */
+    protected $response;
+    /** @var  Exception */
+    protected $e;
+
+    protected $handlers = [
+        'NestedValidationException' => 'handleNestedValidationException',
+        'QueryException' => 'handleQueryException'
+    ];
 
     /**
-     * Constructor
-     *
-     * @param boolean $development Set to true to display full details
+     * ErrorHandler constructor.
+     * @param LoggerInterface $logger
+     * @param bool $showDetails if true, the application returns detailed information about the exception
      */
-    public function __construct($development = false)
+    public function __construct(LoggerInterface $logger, $showDetails = false)
     {
-        $this->development = (bool)$development;
+        $this->logger = $logger;
+        $this->showDetails = (bool)$showDetails;
+
+        //@todo remove this, only here because implementation is not complete yet
+        $this->showDetails = false;
     }
 
     /**
-     * Invoke error handler
-     *
-     * @param ServerRequestInterface $request The most recent Request object
-     * @param ResponseInterface $response The most recent Response object
-     * @param Exception $e The caught Exception object
-     * @todo  Make it actually work
+     * Store the request, response and exception as parameters of the instance and call the relevant error handler
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param Exception $e
      * @return ResponseInterface
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, Exception $e)
     {
-        /** @var \Monolog\Logger $logger */
-        $logger = $c->get('logger');
-        $body = $request->getParsedBody();
-        if ($e instanceof NestedValidationException) {
-            $logger->addNotice("ValidationException {$e->getMainMessage()}", $body);
-            $messages = $this->formatMessages($e);
-            return $response->withJson($e->getFullMessage(), 400);
-        } elseif ($e instanceof QueryException) {
-            $logger->addCritical("QueryException {$e->getMessage()}", $body);
-        } else {
-            $logger->addAlert("Exception {$e->getMessage()}", $body);
+        $this->request = $request;
+        $this->response = $response;
+        $this->e = $e;
+
+        if ($this->showDetails) {
+            return $this->showDetailed();
         }
-        return $response->withStatus(500);
+        return $this->showSimple();
+    }
+
+    /**
+     * @return ResponseInterface
+     */
+    protected function showSimple()
+    {
+        return $this->response->withStatus(500);
+    }
+
+    protected function showDetailed()
+    {
+        $body = $this->getParsedBodySafe();
+        $class = get_class($this->e);
+        $handler = $this-> handlers[$class];
+        call_user_func($handler, $body);
+        return $this->response->withStatus(500);
+    }
+
+    private function handleNestedValidationException($body)
+    {
+        /** @var NestedValidationException $e */
+        $e = $this->e;
+        $this->logger->notice("ValidationException {$e->getMainMessage()}", $body);
+        $messages = $this->formatMessages($e);
+        return $this->response->withJson($e->getFullMessage(), 400);
+    }
+
+
+    private function handleQueryException($body)
+    {
+        /** @var QueryException $e */
+        $e = $this->e;
+        $this->logger->critical("QueryException {$e->getMessage()}", $body);
+    }
+
+    private function handleGeneralException($body)
+    {
+        $this->logger->alert("Exception {$this->e->getMessage()}", $body);
+    }
+
+    private function getParsedBodySafe()
+    {
+        try {
+            $body = $this->request->getParsedBody();
+        } catch (Exception $e) {
+            $body = "Body could not be parsed {$e->getMessage()}";
+        } finally {
+            return $body;
+        }
     }
 }
