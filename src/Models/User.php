@@ -2,8 +2,8 @@
 namespace SkeletonAPI\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use SkeletonAPI\lib\UtilTrait;
-use SkeletonAPI\lib\Validator;
+use SkeletonAPI\Lib\UtilTrait;
+use SkeletonAPI\Lib\Validator;
 
 class User extends Model
 {

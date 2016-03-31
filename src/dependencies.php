@@ -2,7 +2,7 @@
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Monolog\Logger;
 use Slim\Container;
-use SkeletonAPI\lib\ErrorHandler;
+use SkeletonAPI\Lib\ErrorHandler;
 
 $container = $app->getContainer();
 

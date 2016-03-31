@@ -1,7 +1,7 @@
 <?php
 namespace SkeletonAPI\Controllers;
 
-use SkeletonAPI\lib\UtilTrait;
+use SkeletonAPI\Lib\UtilTrait;
 use SkeletonAPI\Models\User as UserModel;
 use Slim\Http\Request;
 use Slim\Http\Response;

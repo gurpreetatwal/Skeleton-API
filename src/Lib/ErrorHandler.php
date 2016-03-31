@@ -1,5 +1,5 @@
 <?php
-namespace SkeletonAPI\lib;
+namespace SkeletonAPI\Lib;
 
 use Exception;
 use Illuminate\Database\QueryException;
@@ -15,7 +15,7 @@ use Respect\Validation\Exceptions\NestedValidationException;
  * developer. In production the error is logged to the log file and the application returns a generic 500 error so as to
  * not expose any information to any malicious actors. Heavily based on the Slim\Handlers\Error class.
  *
- * @package SkeletonAPI\lib
+ * @package SkeletonAPI\Lib
  * @author  Gurpreet Atwal
  * @license MIT
  */

@@ -1,5 +1,5 @@
 <?php
-namespace SkeletonAPI\lib;
+namespace SkeletonAPI\Lib;
 
 use Firebase\JWT\JWT;
 use Respect\Validation\Exceptions\NestedValidationException;
@@ -8,7 +8,7 @@ use Respect\Validation\Exceptions\NestedValidationException;
  * Utility functions for use across the API
  *
  * Class UtilTrait
- * @package SkeletonAPI\lib
+ * @package SkeletonAPI\Lib
  * @author      Gurpreet AtwaSl
  * @license     MIT
  */

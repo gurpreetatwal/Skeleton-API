@@ -62,7 +62,7 @@
             },
             "autoload": {
                 "psr-0": {
-                    "Doctrine\\Common\\Inflector\\": "lib/"
+                    "Doctrine\\Common\\Inflector\\": "Lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -180,7 +180,7 @@
             },
             "autoload": {
                 "psr-0": {
-                    "Doctrine\\Common\\Lexer\\": "lib/"
+                    "Doctrine\\Common\\Lexer\\": "Lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
